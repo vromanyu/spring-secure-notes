@@ -18,34 +18,26 @@ public class NoteController {
 
  private final NoteService noteService;
 
- private void logUserDetails(UserDetails userDetails) {
-  log.info("userDetails: {}", userDetails);
- }
-
  @PostMapping
  public Note createNote(@RequestBody String content, @AuthenticationPrincipal UserDetails userDetails) {
-  logUserDetails(userDetails);
   String username = userDetails.getUsername();
   return noteService.createNoteForUser(username, content);
  }
 
  @GetMapping
  public List<Note> getAllNotes(@AuthenticationPrincipal UserDetails userDetails) {
-  logUserDetails(userDetails);
   String username = userDetails.getUsername();
   return noteService.getNotesForUser(username);
  }
 
  @PutMapping("/{id}")
  public Note updateNote(@PathVariable Integer id, @RequestBody String content, @AuthenticationPrincipal UserDetails userDetails) {
-  logUserDetails(userDetails);
   String username = userDetails.getUsername();
   return noteService.updateNoteForUser(id, content, username);
  }
 
  @DeleteMapping("/{id}")
  public void deleteNote(@PathVariable Integer id, @AuthenticationPrincipal UserDetails userDetails) {
-  logUserDetails(userDetails);
   String username = userDetails.getUsername();
   noteService.deleteNoteForUser(id, username);
  }

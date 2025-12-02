@@ -1,7 +1,7 @@
 package com.vromanyu.secure.notes.controller;
 
-import com.vromanyu.secure.notes.entity.Note;
-import com.vromanyu.secure.notes.service.NoteService;
+import com.vromanyu.secure.notes.entity.AppNote;
+import com.vromanyu.secure.notes.service.AppNoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,30 +16,30 @@ import java.util.List;
 @Slf4j
 public class NoteController {
 
- private final NoteService noteService;
+ private final AppNoteService appNoteService;
 
  @PostMapping
- public Note createNote(@RequestBody String content, @AuthenticationPrincipal UserDetails userDetails) {
+ public AppNote createNote(@RequestBody String content, @AuthenticationPrincipal UserDetails userDetails) {
   String username = userDetails.getUsername();
-  return noteService.createNoteForUser(username, content);
+  return appNoteService.createNoteForUser(username, content);
  }
 
  @GetMapping
- public List<Note> getAllNotes(@AuthenticationPrincipal UserDetails userDetails) {
+ public List<AppNote> getAllNotes(@AuthenticationPrincipal UserDetails userDetails) {
   String username = userDetails.getUsername();
-  return noteService.getNotesForUser(username);
+  return appNoteService.getNotesForUser(username);
  }
 
  @PutMapping("/{id}")
- public Note updateNote(@PathVariable Integer id, @RequestBody String content, @AuthenticationPrincipal UserDetails userDetails) {
+ public AppNote updateNote(@PathVariable Integer id, @RequestBody String content, @AuthenticationPrincipal UserDetails userDetails) {
   String username = userDetails.getUsername();
-  return noteService.updateNoteForUser(id, content, username);
+  return appNoteService.updateNoteForUser(id, content, username);
  }
 
  @DeleteMapping("/{id}")
  public void deleteNote(@PathVariable Integer id, @AuthenticationPrincipal UserDetails userDetails) {
   String username = userDetails.getUsername();
-  noteService.deleteNoteForUser(id, username);
+  appNoteService.deleteNoteForUser(id, username);
  }
 
 }

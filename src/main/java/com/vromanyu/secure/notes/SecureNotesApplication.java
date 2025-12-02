@@ -28,11 +28,11 @@ public class SecureNotesApplication {
   };
  }
 
- private static void generateUser(AppUserRepository appUserRepository, String user, String mail, AppRole userRole) {
-  if (!appUserRepository.existsByUsername(user)) {
+ private static void generateUser(AppUserRepository appUserRepository, String username, String email, AppRole userRole) {
+  if (!appUserRepository.existsByUsername(username)) {
    AppUser appUser = new AppUser();
-   appUser.setUsername(user);
-   appUser.setEmail(mail);
+   appUser.setUsername(username);
+   appUser.setEmail(email);
    appUser.setPassword("{noop}1234");
    appUser.setNonLocked(false);
    appUser.setNonExpired(true);

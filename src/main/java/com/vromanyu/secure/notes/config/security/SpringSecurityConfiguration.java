@@ -18,7 +18,11 @@ public class SpringSecurityConfiguration {
   http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
   http.csrf(AbstractHttpConfigurer::disable);
   http.httpBasic(Customizer.withDefaults())
-   .authorizeHttpRequests(requests -> requests.anyRequest().authenticated());
+   .authorizeHttpRequests(requests ->
+    requests
+     .requestMatchers("/api/notes/**").authenticated()
+     .requestMatchers("/api/admin/**").hasRole("ADMIN")
+     .anyRequest().authenticated());
   return http.build();
  }
 

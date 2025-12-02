@@ -20,6 +20,11 @@ public class SecureNotesApplication {
  }
 
  @Bean
+ public PasswordEncoder passwordEncoder() {
+  return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+ }
+
+ @Bean
  public CommandLineRunner commandLineRunner(AppRoleRepository appRoleRepository, AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
   return args -> {
    AppRole userRole = appRoleRepository.findByRole(AppRoleEnum.ROLE_USER).orElseGet(() -> appRoleRepository.save(new AppRole(AppRoleEnum.ROLE_USER)));
@@ -47,8 +52,4 @@ public class SecureNotesApplication {
   }
  }
 
- @Bean
- public PasswordEncoder passwordEncoder() {
-  return PasswordEncoderFactories.createDelegatingPasswordEncoder();
- }
 }

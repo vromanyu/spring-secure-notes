@@ -1,5 +1,6 @@
 package com.vromanyu.secure.notes.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class AppRole {
  @Enumerated(EnumType.STRING)
  private AppRoleEnum role;
 
+ @JsonIgnore
  @OneToMany(mappedBy = "appRole", cascade = CascadeType.MERGE)
  private Set<AppUser> users = new HashSet<>();
 

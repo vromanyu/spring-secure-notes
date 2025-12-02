@@ -20,8 +20,6 @@ public class SpringSecurityConfiguration {
   http.httpBasic(Customizer.withDefaults())
    .authorizeHttpRequests(requests ->
     requests
-     .requestMatchers("/api/notes/**").authenticated()
-     .requestMatchers("/api/admin/**").hasRole("ADMIN")
      .anyRequest().authenticated());
   return http.build();
  }

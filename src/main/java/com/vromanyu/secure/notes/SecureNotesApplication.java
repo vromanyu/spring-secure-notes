@@ -9,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class SecureNotesApplication {
@@ -18,22 +20,22 @@ public class SecureNotesApplication {
  }
 
  @Bean
- public CommandLineRunner commandLineRunner(AppRoleRepository appRoleRepository, AppUserRepository appUserRepository) {
+ public CommandLineRunner commandLineRunner(AppRoleRepository appRoleRepository, AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
   return args -> {
    AppRole userRole = appRoleRepository.findByRole(AppRoleEnum.ROLE_USER).orElseGet(() -> appRoleRepository.save(new AppRole(AppRoleEnum.ROLE_USER)));
    AppRole adminRole = appRoleRepository.findByRole(AppRoleEnum.ROLE_ADMIN).orElseGet(() -> appRoleRepository.save(new AppRole(AppRoleEnum.ROLE_ADMIN)));
 
-   generateUser(appUserRepository, "user", "user@gmail.com", userRole);
-   generateUser(appUserRepository, "admin", "admin@gmail.com", adminRole);
+   generateUser(appUserRepository, passwordEncoder,  "user", "user@gmail.com", userRole);
+   generateUser(appUserRepository, passwordEncoder,"admin", "admin@gmail.com", adminRole);
   };
  }
 
- private static void generateUser(AppUserRepository appUserRepository, String username, String email, AppRole userRole) {
+ private static void generateUser(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder, String username, String email, AppRole userRole) {
   if (!appUserRepository.existsByUsername(username)) {
    AppUser appUser = new AppUser();
    appUser.setUsername(username);
    appUser.setEmail(email);
-   appUser.setPassword("{noop}1234");
+   appUser.setPassword(passwordEncoder.encode("1234"));
    appUser.setNonLocked(false);
    appUser.setNonExpired(true);
    appUser.setCredentialsNonExpired(true);
@@ -41,8 +43,12 @@ public class SecureNotesApplication {
    appUser.setTwoFactorEnabled(false);
    appUser.setSignUpMethod("email");
    appUser.setAppRole(userRole);
-   userRole.getUsers().add(appUser);
    appUserRepository.save(appUser);
   }
+ }
+
+ @Bean
+ public PasswordEncoder passwordEncoder() {
+  return PasswordEncoderFactories.createDelegatingPasswordEncoder();
  }
 }

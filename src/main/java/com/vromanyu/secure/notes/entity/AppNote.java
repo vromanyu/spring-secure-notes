@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Note {
+public class AppNote {
 
  @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Note {
  @UpdateTimestamp
  private LocalDateTime updateDate;
 
- public Note(String username, String content){
+ public AppNote(String username, String content){
   this.ownerName = username;
   this.content = content;
  }

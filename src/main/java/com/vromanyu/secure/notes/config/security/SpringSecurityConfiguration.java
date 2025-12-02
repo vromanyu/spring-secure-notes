@@ -23,6 +23,7 @@ public class SpringSecurityConfiguration {
    .authorizeHttpRequests(requests ->
     requests
      .requestMatchers("/public/**").permitAll()
+     .requestMatchers("/api/admin/**").hasRole("ADMIN")
      .anyRequest().authenticated());
   return http.build();
  }

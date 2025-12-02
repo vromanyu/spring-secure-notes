@@ -10,7 +10,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -26,12 +29,12 @@ public class SpringSecurityConfiguration {
  }
 
  @Bean
- public UserDetailsService userDetailsService() {
-  InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-  manager.createUser(User.withUsername("admin").password("{noop}1234").roles("ADMIN").build());
-  manager.createUser(User.withUsername("user1").password("{noop}1234").roles("USER").build());
-  manager.createUser(User.withUsername("user2").password("{noop}1234").roles("USER").build());
-  return manager;
+ public UserDetailsService userDetailsService(DataSource dataSource) {
+  JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+  userDetailsManager.createUser(User.withUsername("admin").password("{noop}1234").roles("ADMIN").build());
+  userDetailsManager.createUser(User.withUsername("user1").password("{noop}1234").roles("USER").build());
+  userDetailsManager.createUser(User.withUsername("user2").password("{noop}1234").roles("USER").build());
+  return userDetailsManager;
  }
 
 }

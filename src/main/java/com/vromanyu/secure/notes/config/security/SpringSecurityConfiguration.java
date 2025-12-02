@@ -22,6 +22,7 @@ public class SpringSecurityConfiguration {
   http.httpBasic(Customizer.withDefaults())
    .authorizeHttpRequests(requests ->
     requests
+     .requestMatchers("/public/**").permitAll()
      .anyRequest().authenticated());
   return http.build();
  }

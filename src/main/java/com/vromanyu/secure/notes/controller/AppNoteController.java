@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = "/api/notes", produces = "application/json")
 @RequiredArgsConstructor
 @Slf4j
-public class NoteController {
+public class AppNoteController {
 
  private final AppNoteService appNoteService;
 

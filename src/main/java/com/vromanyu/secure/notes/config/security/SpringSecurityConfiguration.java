@@ -1,5 +1,6 @@
 package com.vromanyu.secure.notes.config.security;
 
+import com.vromanyu.secure.notes.filter.LoggingFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -16,9 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SpringSecurityConfiguration {
 
  @Bean
- public SecurityFilterChain customFilterChain(HttpSecurity http) throws Exception {
+ public SecurityFilterChain customFilterChain(HttpSecurity http, LoggingFilter loggingFilter) throws Exception {
   http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
   http.csrf(AbstractHttpConfigurer::disable);
+  http.addFilterBefore(loggingFilter, BasicAuthenticationFilter.class);
   http.httpBasic(Customizer.withDefaults())
    .authorizeHttpRequests(requests ->
     requests

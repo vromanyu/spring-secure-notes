@@ -1,7 +1,6 @@
 package com.vromanyu.secure.notes.config.security;
 
 import com.vromanyu.secure.notes.filter.LoggingFilter;
-import com.vromanyu.secure.notes.filter.ValidatorFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -19,11 +18,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SpringSecurityConfiguration {
 
  @Bean
- public SecurityFilterChain customFilterChain(HttpSecurity http, LoggingFilter loggingFilter, ValidatorFilter validatorFilter) throws Exception {
+ public SecurityFilterChain customFilterChain(HttpSecurity http, LoggingFilter loggingFilter) throws Exception {
   http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
   http.csrf(AbstractHttpConfigurer::disable);
   http.addFilterBefore(loggingFilter, BasicAuthenticationFilter.class);
-  http.addFilterBefore(validatorFilter, LoggingFilter.class);
   http.httpBasic(Customizer.withDefaults())
    .authorizeHttpRequests(requests ->
     requests

@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
 
  private final AppUserRepository appUserRepository;
 
- @GetMapping
+ @GetMapping("/user")
  public ResponseEntity<?> getUserDetails(@AuthenticationPrincipal UserDetails userDetails){
 
   AppUser appUser = appUserRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("username not found"));
@@ -33,5 +33,11 @@ public class UserController {
    appUser.isTwoFactorEnabled(), roles);
 
   return ResponseEntity.ok(responseDto);
+ }
+
+ @GetMapping("/username")
+ public ResponseEntity<String> getUsername(@AuthenticationPrincipal UserDetails userDetails){
+  AppUser appUser = appUserRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("username not found"));
+  return ResponseEntity.ok(appUser.getUsername());
  }
 }

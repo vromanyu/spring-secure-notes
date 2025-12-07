@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_USER: ${{env.POSTGRES_USER}}
+      POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
+      POSTGRES_DB: ${{env.POSTGRES_DB}}
     services:
       postgres:
         image: postgres:latest
@@ -17,10 +21,6 @@ jobs:
           POSTGRES_USER: ${{env.POSTGRES_USER}}
           POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
           POSTGRES_DB: ${{env.POSTGRES_DB}}
-    env:
-      POSTGRES_USER: ${{env.POSTGRES_USER}}
-      POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
-      POSTGRES_DB: ${{env.POSTGRES_DB}}
     steps:
       - name: clone
         uses: actions/download-artifact@v5

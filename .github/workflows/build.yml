@@ -5,14 +5,15 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  POSTGRES_USER: ${{env.POSTGRES_USER}}
+  POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
+  POSTGRES_DB: ${{env.POSTGRES_DB}}
+
 jobs:
   build:
     environment: "default"
     runs-on: ubuntu-latest
-    env:
-      POSTGRES_USER: ${{env.POSTGRES_USER}}
-      POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
-      POSTGRES_DB: ${{env.POSTGRES_DB}}
     services:
       postgres:
         image: postgres:latest

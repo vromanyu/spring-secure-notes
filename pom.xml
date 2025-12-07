@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vromanyu</groupId>
-    <artifactId>secure-notes</artifactId>
+    <artifactId>spring-secure-notes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>secure-notes</name>
-    <description>secure-notes</description>
+    <name>spring-secure-notes</name>
+    <description>spring-secure-notes</description>
     <url/>
     <licenses>
         <license/>

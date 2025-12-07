@@ -15,6 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
+@Table(schema = "spring_security")
 public class AppRole {
 
  @Id

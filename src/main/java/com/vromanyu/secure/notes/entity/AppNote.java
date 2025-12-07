@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @ToString
+@Table(schema = "spring_security")
 public class AppNote {
 
  @Id

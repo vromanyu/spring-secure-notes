@@ -25,9 +25,9 @@ jobs:
           POSTGRES_DB: ${{env.POSTGRES_DB}}
     steps:
       - name: clone
-        uses: actions/download-artifact@v5
+        uses: actions/checkout@v5
       - name: setup
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: "25"
           distribution: "temurin"
